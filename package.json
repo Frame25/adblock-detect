@@ -2,16 +2,18 @@
   "name": "@frame25/adblock-detect",
   "version": "1.0.0",
   "description": "Simple AdBlock Detect Class on Javascript (ES5 / ES6)",
-  "main": "index.js",
+  "main": "dist/module.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "webpack --env production --mode=production"
+    "compile": "webpack --env production --mode=production",
+    "dev": "webpack --env development --mode=development"
   },
   "keywords": [
     "adblock"
   ],
   "author": "Pavel Kalchenko <pavel.k.bz@gmail.com>",
   "license": "ISC",
+  "homepage": "https://github.com/Frame25/adblock-detect",
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",

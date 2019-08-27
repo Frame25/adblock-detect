@@ -10,6 +10,7 @@ const consoleStyles = {
 function log (string = '', type = 'default') {
   console.log('%c%s', consoleStyles[type], string)
 }
+
 export default class AdBlockDetect {
   constructor (props = {}) {
     this._options = {

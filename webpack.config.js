@@ -1,10 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    example: './src/index.js',
+    module: './src/adblock-detect-module.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'adblock-detect-es5.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -18,5 +21,8 @@ module.exports = {
         }
       }
     ]
+  },
+  optimization: {
+    minimize: false
   }
 };

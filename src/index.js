@@ -5,3 +5,4 @@ window.AdBlockDetectDefault = new AdBlockDetect({
     window.AdBlockEnabled = res
   }
 });
+window.AdBlockDetectDefault.init();
