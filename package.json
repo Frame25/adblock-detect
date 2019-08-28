@@ -1,6 +1,6 @@
 {
   "name": "@frame25/adblock-detect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple AdBlock Detect Class on Javascript (ES5 / ES6)",
   "main": "dist/module.js",
   "scripts": {

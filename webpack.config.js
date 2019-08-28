@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    example: './src/index.js',
+    example: './src/example.js',
     module: './src/adblock-detect-module.js'
   },
   output: {
