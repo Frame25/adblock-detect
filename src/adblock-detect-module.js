@@ -25,7 +25,7 @@ export default class AdBlockDetect {
       loopInterval: props.loopInterval || 100,
       onDetected: typeof props.onDetected === 'function' ? props.onDetected : function (detected) { if (this.debug) log('Default onDetected Callback', 'danger') },
       onNotDetected: typeof props.onNotDetected === 'function' ? props.onNotDetected : function (detected) { if (this.debug) log('Default onNotDetected Callback', 'success') },
-      onEnd: props.onEnd || null
+      onEnd: typeof props.onEnd === 'function' ? props.onEnd : function (detected) { if (this.debug) log('Default onNotDetected Callback', 'success') }
     }
   }
 

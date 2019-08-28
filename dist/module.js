@@ -138,7 +138,9 @@ function () {
       onNotDetected: typeof props.onNotDetected === 'function' ? props.onNotDetected : function (detected) {
         if (this.debug) log('Default onNotDetected Callback', 'success');
       },
-      onEnd: props.onEnd || null
+      onEnd: typeof props.onEnd === 'function' ? props.onEnd : function (detected) {
+        if (this.debug) log('Default onNotDetected Callback', 'success');
+      }
     };
   }
 
