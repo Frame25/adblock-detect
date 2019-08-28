@@ -26,7 +26,7 @@ new AdBlockDetect({
   pixelClass: 'any classes', // you can add some extra custom css classes to pixel if need
   pixelStyle: 'background: red;', // adding custom extra styles, BUT do NOT add "pointer-events: none", "visibility: hidden" and "display: none"
   loopLimit: 5, // count of checking cycles; default is recomended
-  loopInterval: 500, // interval time in milliseconds; default is recomended
+  loopInterval: 100, // interval time in milliseconds; default is recomended
   onDetected: function(){}, // if AdBlock in browser callback
   onNotDetected: function(){}, // if NO AdBlock in browser callback
   onEnd: function(){}, // finish callback in each case; return result boolean value with AdBlock detection

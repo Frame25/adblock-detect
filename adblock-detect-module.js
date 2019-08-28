@@ -54,7 +54,7 @@ export default class AdBlockDetect {
   }
 
   checkAdBlock () {
-    let intervalCount = 0;
+    let intervalCount = 1;
     this._options.intervalInstance = setInterval(() => {
       if (intervalCount >= this._options.loopLimit) {
         clearInterval(this._options.intervalInstance);
