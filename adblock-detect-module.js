@@ -90,4 +90,15 @@ export default class AdBlockDetect {
     this.insertPixelInDocument();
     this.checkAdBlock();
   }
+
+  static go () {
+    return (new Promise((resolve, reject) => {
+      (new AdBlockDetect({
+        onEnd (res) {
+          window.AdBlockEnabled = res;
+          resolve(res)
+        }
+      })).init()
+    }))
+  }
 }

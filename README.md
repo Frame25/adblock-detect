@@ -44,3 +44,20 @@ const abd = new AdBlockDetect({
 });
 abd.init(); // to start process
 ```
+
+## Easy check
+
+If you don't need any custom stuff, and just want simple one-row result, here it is:
+
+```js
+AdBlockDetect.go() // after 500ms you'll have window.AdBlockEnabled === true or false
+```
+
+This method returns a promise, so you can do like this:
+
+```js
+AdBlockDetect.go().then(adblockIsOn => {
+  // adblockIsOn is Boolean
+  if (adblockIsOn) console.log('Damn it\'s enabled!')
+  else console.log('Get the party started!')
+})
