@@ -7,8 +7,10 @@ const consoleStyles = {
   default: ''
 }
 
+let start = Date.now();
+
 function log (string = '', type = 'default') {
-  console.log('%c%s', consoleStyles[type], string)
+  console.log('%c%s', consoleStyles[type], string, '  ' + (Date.now() - start) + 'ms')
 }
 
 export default class AdBlockDetect {
@@ -20,7 +22,7 @@ export default class AdBlockDetect {
       debug: typeof props.debug === 'boolean' ? props.debug : false,
       pixelInstance: null,
       adBlockDetected: false,
-      intervalInstance: null,
+      timeoutInstance: null,
       loopLimit: props.loopLimit || 5,
       loopInterval: props.loopInterval || 100,
       onDetected: typeof props.onDetected === 'function' ? props.onDetected : function (detected) { if (this.debug) log('Default onDetected Callback', 'danger') },
@@ -53,38 +55,41 @@ export default class AdBlockDetect {
     if (this._options.debug) log('AdBlockDetect pixel removed from Document Body', 'disabled')
   }
 
+  checkIteration (intervalCount) {
+    if (intervalCount >= this._options.loopLimit) {
+      clearTimeout(this._options.timeoutInstance);
+      this.removePixelFromDocument();
+      this._options.onNotDetected();
+      if (this._options.debug) log('No AdBlock detected', 'success');
+      this._options.onEnd(this._options.adBlockDetected);
+      return false;
+    }
+
+    let pixelInDoc = document.getElementById('adblock-check-pixel_' + this._options.id);
+    if (pixelInDoc) {
+      let pixelStyles = window.getComputedStyle(pixelInDoc, null);
+
+      if (pixelStyles && (pixelStyles.display === 'none' || pixelStyles.visibility === 'hidden')) {
+        this._options.adBlockDetected = true;
+        clearTimeout(this._options.timeoutInstance);
+        this.removePixelFromDocument();
+        this._options.onDetected();
+        if (this._options.debug) log('AdBlock is detected!', 'danger');
+        this._options.onEnd(this._options.adBlockDetected);
+        return true;
+      }
+    }
+    intervalCount++;
+    this.timeoutInstance = setTimeout(() => this.checkIteration(intervalCount), this.loopInterval)
+  }
+
   checkAdBlock () {
     let intervalCount = 1;
-    this._options.intervalInstance = setInterval(() => {
-      if (intervalCount >= this._options.loopLimit) {
-        clearInterval(this._options.intervalInstance);
-        this.removePixelFromDocument();
-        this._options.onNotDetected();
-        if (this._options.debug) log('No AdBlock detected', 'success');
-        this._options.onEnd(this._options.adBlockDetected);
-        return false;
-      }
-
-      let pixelInDoc = document.getElementById('adblock-check-pixel_' + this._options.id);
-
-      if (pixelInDoc) {
-        let pixelStyles = window.getComputedStyle(pixelInDoc, null);
-
-        if (pixelStyles && (pixelStyles.display === 'none' || pixelStyles.visibility === 'hidden')) {
-          this._options.adBlockDetected = true;
-          clearInterval(this._options.intervalInstance);
-          this.removePixelFromDocument();
-          this._options.onDetected();
-          if (this._options.debug) log('AdBlock is detected!', 'danger');
-          this._options.onEnd(this._options.adBlockDetected);
-        }
-      }
-
-      intervalCount++
-    })
+    this.checkIteration(intervalCount)
   }
 
   init () {
+    start = Date.now();
     if (this._options.debug) log('AdBlockDetect inited', 'info')
     this.createPixel();
     this.insertPixelInDocument();
